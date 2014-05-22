@@ -51,6 +51,17 @@ module Alchemy
       render 'alchemy/page_layouts/standard', page: @page
     end
 
+    # Renders global pages (including their page_layout).
+    #
+    # Page layout files belongs in +/app/views/alchemy/page_layouts/+ and this
+    # method requires a layout file to be present
+    #
+    def render_page(page_layout, opts = {})
+      Language.current.pages.where(page_layout: page_layout).map do |page|
+        render page, opts.merge(page: page)
+      end.join("\n").html_safe
+    end
+
     # Renders a partial for current site
     #
     # Place a rails partial into +app/views/alchemy/site_layouts+
