@@ -7,11 +7,8 @@
         <% if alchemy.respond_to?(:login_url) %>
           <%= link_to_unless site == Alchemy::Site.current,
             site.name,
-            alchemy.login_url(
-              protocol: 'http://',
-              host: site.host,
-              user: {login: current_alchemy_user.try(:login)}
-            ), target: '_blank' %>
+            url_for(:host => site.host),
+            target: '_blank' %>
         <% else %>
           <%= site.name %>
         <% end %>
