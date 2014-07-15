@@ -5,12 +5,14 @@
   :id => html_options[:id]
 ) do %>
   <% pages.each do |page| %>
-    <% position = 'first' if page == pages.first %>
-    <% position = 'last' if page == pages.last %>
-    <%= content_tag(
-      'li',
-      :class => [page.slug, position, page_active?(page) ? 'active' : nil].compact.join(' ')
-    ) do %>
+    <%
+      classes = []
+      classes << page.slug  if options[:add_page_slug_classes] != false
+      classes << 'first'    if page == pages.first
+      classes << 'last'     if page == pages.last
+      classes << 'active'   if page_active?(page)
+    %>
+    <li class="<%= classes.join(' ') %>">
       <%= render options[:navigation_link_partial], :page => page, :options => options %>
       <% options[:from_page] = page %>
       <% if options[:reverse_children] %>
@@ -24,7 +26,7 @@
     <% end %>
     <% if options[:spacer].present? && position != 'last' %>
       <%= content_tag :li, options[:spacer].html_safe, class: 'navigation_spacer' %>
-    <% end %>
+    </li>
   <% end %>
 <% end %>
 <% end %>
