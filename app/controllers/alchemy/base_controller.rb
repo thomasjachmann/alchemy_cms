@@ -64,13 +64,6 @@ module Alchemy
       ActionMailer::Base.default_url_options[:host] = request.host_with_port
     end
 
-    def render_404(exception = nil)
-      if exception
-        logger.info "Rendering 404: #{exception.message}"
-      end
-      render :file => Rails.root.join("public/404.html"), :status => 404, :layout => false
-    end
-
     # Enforce ssl for login and all admin modules.
     #
     # Default is +false+
