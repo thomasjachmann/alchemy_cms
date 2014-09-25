@@ -4,7 +4,7 @@
 
 <%- if @element_validated -%>
 
-  $('.element_head', $el).replaceWith('<%= j render("element_head", element: @element) %>');
+  $el.replaceWith('<%= j render("element", element: @element) %>');
   Alchemy.ElementEditors.reinit($el);
   $("#element_<%= @element.id %>_errors").hide();
   Alchemy.setElementSaved($el);
