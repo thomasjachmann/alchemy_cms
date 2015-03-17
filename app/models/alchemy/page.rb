@@ -331,7 +331,7 @@ module Alchemy
     # The +published_at+ attribute is used as +cache_key+.
     #
     def publish!
-      update_columns(published_at: Time.now, public: true)
+      update_columns(published_at: Time.now, public: true, updated_at: Time.now)
     end
 
     # Updates an Alchemy::Page based on a new ordering to be applied to it
@@ -343,7 +343,7 @@ module Alchemy
     #   A tree node with new lft, rgt, depth, url, parent_id and restricted indexes to be updated
     #
     def update_node!(node)
-      hash = {lft: node.left, rgt: node.right, parent_id: node.parent, depth: node.depth, restricted: node.restricted}
+      hash = {lft: node.left, rgt: node.right, parent_id: node.parent, depth: node.depth, restricted: node.restricted, updated_at: Time.now}
 
       if Config.get(:url_nesting) && !self.redirects_to_external? && self.urlname != node.url
         LegacyPageUrl.create(page_id: self.id, urlname: self.urlname)
