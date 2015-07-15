@@ -1,23 +1,21 @@
-<% cache(content) do %>
-  <%- select_values = content_settings_value(content,
-    :select_values, local_assigns.fetch(:options, {})) -%>
+<%- select_values = content_settings_value(content,
+  :select_values, local_assigns.fetch(:options, {})) -%>
 
-  <div class="content_editor essence_select<%= options[:display_inline].to_s == 'true' ? ' display_inline' : '' %>" id="<%= content.dom_id %>" data-content-id="<%= content.id %>">
-    <%= label_and_remove_link(content) %>
+<div class="content_editor essence_select<%= options[:display_inline].to_s == 'true' ? ' display_inline' : '' %>" id="<%= content.dom_id %>" data-content-id="<%= content.id %>">
+  <%= label_and_remove_link(content) %>
 
-    <% if select_values.nil? %>
-      <%= warning(':select_values is nil', "<strong>No select values given.</strong><br>Please provide :<code>select_values</code> either as argument to <code>render_essence_editor</code> helper or as setting on the content definition in <code>elements.yml</code>.".html_safe) %>
-    <% else %>
-      <%  if select_values.is_a?(Hash)
-            options_tags = grouped_options_for_select(select_values, content.ingredient)
-          else
-            options_tags = options_for_select(select_values, content.ingredient)
-          end %>
+  <% if select_values.nil? %>
+    <%= warning(':select_values is nil', "<strong>No select values given.</strong><br>Please provide :<code>select_values</code> either as argument to <code>render_essence_editor</code> helper or as setting on the content definition in <code>elements.yml</code>.".html_safe) %>
+  <% else %>
+    <%  if select_values.is_a?(Hash)
+          options_tags = grouped_options_for_select(select_values, content.ingredient)
+        else
+          options_tags = options_for_select(select_values, content.ingredient)
+        end %>
 
-      <%= select_tag content.form_field_name, options_tags, {
-        class: ["alchemy_selectbox", "essence_editor_select", html_options[:class]].join(' '),
-        style: html_options[:style]
-      } %>
-    <% end %>
-  </div>
-<% end %>
+    <%= select_tag content.form_field_name, options_tags, {
+      class: ["alchemy_selectbox", "essence_editor_select", html_options[:class]].join(' '),
+      style: html_options[:style]
+    } %>
+  <% end %>
+</div>
