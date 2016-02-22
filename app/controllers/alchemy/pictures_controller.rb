@@ -54,9 +54,9 @@ module Alchemy
             quality = params[:quality] || Config.get(:output_image_jpg_quality)
             options << "-quality #{quality}"
           end
-          # Flatten animated gifs, only if converting to a different format.
+          # Strip animations from gifs, only if converting to a different format.
           if type != "gif" && image.ext == 'gif'
-            options << "-flatten"
+            options << "-delete 1--1"
           end
           render text: image.encode(type, options.join(' ')).data
         end
